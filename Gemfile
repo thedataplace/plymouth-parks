@@ -37,6 +37,14 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
+  # Database cleaner
+  gem 'database_cleaner'
+  # Required integration tests
+  gem 'capybara'
+  # Add cucumber for writing acceptance tests
+  gem 'cucumber-rails', require: false
+  # Use selenium webdriver for running integration tests
+  gem 'selenium-webdriver'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
@@ -52,8 +60,6 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
 end
