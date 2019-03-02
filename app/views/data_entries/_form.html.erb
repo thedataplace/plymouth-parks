@@ -1,0 +1,109 @@
+<div class="container">
+  <p id="notice"><%= notice %></p>
+  <%= form_with(model: data_entry, local: true) do |form| %>
+    <% if data_entry.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(data_entry.errors.count, "error") %> prohibited this data_entry from being saved:</h2>
+
+        <ul>
+        <% data_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <h1>New Data Entry</h1>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <%= form.label :title %>
+      </div>
+      <div class="col-27">
+        <%= form.text_field :title %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <%= form.label :subtitle %>
+      </div>
+      <div class="col-27">
+        <%= form.text_field :subtitle %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <%= form.label :username %>
+      </div>
+      <div class="col-27">
+        <%= form.text_field :username %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="upload-button-wrapper">
+        <button class="upload-button">Upload Image</button>
+        <%= form.file_field :image, accept: 'image/png,image/gif,image/jpeg' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <img id="image" />
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <%= form.label :latitude %>
+      </div>
+      <div class="col-27">
+        <%= form.text_field :latitude %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <%= form.label :longitude %>
+      </div>
+      <div class="col-27">
+        <%= form.text_field :longitude %>
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="get-coordinates" class="button" type="button">
+        Get coordinates
+      </button>
+    </div>
+
+    <div class="row">
+      <div class="col-27">
+        <iframe
+          id="map-link"
+          style="width:100%; height: 300px; display: inline-block; margin-top: 6px;"
+          id="gmap_canvas"
+          src="https://maps.google.com/maps?q=plymouth%20uk&t=k&z=13&ie=UTF8&iwloc=&output=embed"
+          frameborder="0"
+          scrolling="no"
+          marginheight="0"
+          marginwidth="0"></iframe>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <%= form.label :notes %>
+      </div>
+      <div class="col-27">
+        <%= form.text_area :notes %>
+      </div>
+    </div>
+
+    <div class="row">
+      <%= form.button 'Submit Data Entry', type: :submit, class: "button" %>
+    </div>
+  <% end %>
+</div>
