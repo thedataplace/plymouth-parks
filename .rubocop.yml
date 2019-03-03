@@ -1,0 +1,19 @@
+AllCops:
+  Exclude:
+    - app/channels
+    - bin/**/*
+    - db/**/*
+    - lib/tasks/cucumber.rake
+    - features/support/env.rb
+    # - config/**/*
+Metrics/LineLength:
+  Max: 160
+Style/BlockComments:
+  Description: 'Do not use block comments.'
+  Enabled: false
+Metrics/MethodLength:
+  Exclude:
+Metrics/AbcSize:
+  Exclude:
+Style/FrozenStringLiteralComment:
+  Enabled: false

@@ -1,8 +1,8 @@
+# rubocop:disable Metrics/BlockLength
 ActiveAdmin.register DataEntry do
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
+  # See permitted parameters documentation:
+  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   permit_params :title, :subtitle, :username, :latitude, :longitude, :notes, :image
-
   index do
     selectable_column
     id_column
@@ -17,7 +17,6 @@ ActiveAdmin.register DataEntry do
     end
     actions
   end
-
   show do
     attributes_table do
       row :title
@@ -30,7 +29,6 @@ ActiveAdmin.register DataEntry do
       end
     end
   end
-
   form do |f|
     f.inputs do
       f.input :title, as: :string
@@ -44,3 +42,4 @@ ActiveAdmin.register DataEntry do
     f.actions
   end
 end
+# rubocop:enable Metrics/BlockLength
