@@ -1,4 +1,4 @@
-Feature: New Data Entry
+Feature: Data Entry Form
 
   Background:
     Given I am on the home page
