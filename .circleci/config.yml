@@ -52,8 +52,7 @@ jobs:
           name: run tests
           command: |
             mkdir /tmp/test-results
-            bundle install
-            bin/rails test
+            bundle exec rails test
 
       # collect reports
       - store_test_results:
