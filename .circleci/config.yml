@@ -11,7 +11,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: circleci-plymouth-parks-user
           RAILS_ENV: test
-      - image: circleci/postgres:10.5-alpine-ram
+      - image: mdillon/postgis:9.5
         environment:
           POSTGRES_USER: circleci-plymouth-parks-user
           POSTGRES_DB: plymouth-parks_test
