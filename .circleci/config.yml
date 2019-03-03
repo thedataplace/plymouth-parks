@@ -1,104 +1,73 @@
 version: 2
 jobs:
-  bundle_install:
+  build:
+    parallelism: 1
     docker:
-      - image: circleci/ruby:2.4.5
+      - image: circleci/ruby:2.4.5-node-browsers-legacy
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: circleci-plymouth-parks-user
+          RAILS_ENV: test
+      - image: circleci/postgres:10.5-alpine-ram
+        environment:
+          POSTGRES_USER: circleci-plymouth-parks-user
+          POSTGRES_DB: plymouth-parks_test
+          POSTGRES_PASSWORD: ""
     steps:
       - checkout
+
+      # Which version of bundler?
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      # Restore bundle cache
       - restore_cache:
-          key: plymouths-parks-bundle-v3-{{ checksum "Gemfile.lock" }}
-      - run: bundle install --path vendor/bundle
+          keys:
+            - plymouth-parks-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - plymouth-parks-bundle-v2-
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
       - save_cache:
-          key: plymouths-parks-bundle-v3-{{ checksum "Gemfile.lock" }}
+          key: plymouth-parks-bundle-v2-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
-  precompile_assets:
-    docker:
-      - image: circleci/ruby:2.4.5
-    steps:
-      - checkout
-      - restore_cache:
-          key: plymouths-parks-bundle-v3-{{ checksum "Gemfile.lock" }}
-        - run:
-          name: Install any missing gems / dependencies / extensions
-          command: bundle install --path vendor/bundle
-        - run:
-          name: Precompile assets
-          command: ./bin/rails assets:precompile
-      - save_cache:
-          name: Cache precompiled assets
-          key: precompiled-assets-v1-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - public/assets
-
-  rails_tests: &rails_tests
-    docker:
-      - image: circleci/ruby:2.4.5-node-browsers
-        environment:
-          PGUSER: postgres
-          RAILS_ENV: test
-          PGHOST: 127.0.0.1
-      - image: circleci/postgres:9.5-alpine
-        environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: plymouth_parks_test
-          POSTGRES_PASSWORD: postgres
-      steps:
-      - checkout
-      - restore_cache:
-          name: Restore bundled gems from cache
-          key: plymouth-parks-bundle-v3-{{ checksum "Gemfile.lock" }}
-      - restore_cache:
-          name: Restore precompiled assets from cache
-          key: precompiled-assets-v1-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Install any missing gems / dependencies / extensions
-          command: bundle install --path vendor/bundle
-      - run:
-          name: Install PG
-          command: sudo apt-get update -qq && sudo apt-get install postgresql
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run: bundle exec rails db:create
-      - run: bundle exec rails db:gis:setup
-      - run: bundle exec rails db:migrate
+
+      - run: bin/rails db:create
+
+      - run: bin/rails db:gis:setup
+
+      - run: bin/rails db:schema:load --trace
+
+      # Run cucumber in parallel
       - run:
-          name: Run Tests
-          command: bin/rails test test/controllers test/jobs test/lib test/mailers test/models test/policies test/texters --verbose
+          name: Run cucumber
+          command: |
+            bundle exec cucumber --format junit --out test_results/cucumber.xml
+
+      # Run rspec in parallel
+      - run:
+          name: Run tests
+          command: |
+            bundle exec rails test
+
+      # Run rubocop in parallel
+      - run:
+          name: Run rubocop
+          command: |
+            bundle exec rubocop
+
+      # Save test results for timing analysis
       - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test_results
-
-  rubocop:
-    docker:
-      - image: circleci/ruby:2.4.5
-    steps:
-      - checkout
-      - run:
-          name: Install Rubocop
-          command: sudo gem install rubocop:0.47.1
-      - run: rubocop
-
-workflows:
-  version: 2
-  run_tests:
-    jobs:
-      - bundle_install:
-          filters:
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-      - rubocop
-      - precompile_assets:
-          requires:
-            - bundle_install
-          filters:
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-      - rails_tests:
-          requires:
-            - bundle_install
-            - precompile_assets
+          path: test_results
