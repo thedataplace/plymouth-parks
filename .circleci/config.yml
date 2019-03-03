@@ -1,0 +1,76 @@
+version: 2
+jobs:
+  build:
+    parallelism: 1
+    docker:
+      - image: circleci/ruby:2.4.5-jessie-node
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: circleci-plymouth-parks-user
+          RAILS_ENV: test
+      - image: mdillon/postgis:9.5
+        environment:
+          POSTGRES_USER: circleci-plymouth-parks-user
+          POSTGRES_DB: plymouth-parks_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - checkout
+
+      # Which version of bundler?
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - plymouth-parks-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - plymouth-parks-bundle-v2-
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: plymouth-parks-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run: bin/rails db:create
+      - run: bin/rails db:gis:setup
+      - run: bin/rails db:schema:load --trace
+
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            bundle install
+            bin/rails test
+
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+
+      # Run cucumber in parallel
+      - run:
+          name: Run cucumber
+          command: |
+            bundle exec cucumber --format junit --out test_results/cucumber.xml
+
+      # Run rubocop in parallel
+      - run:
+          name: Run rubocop
+          command: |
+            bundle exec rubocop

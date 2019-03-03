@@ -1,16 +1,6 @@
+# Handles CRUD functionality for DataEntry records
 class DataEntriesController < ApplicationController
-  before_action :set_data_entry, only: [:show, :edit, :update, :destroy]
-
-  # GET /data_entries
-  # GET /data_entries.json
-  def index
-    @data_entries = DataEntry.all
-  end
-
-  # GET /data_entries/1
-  # GET /data_entries/1.json
-  def show
-  end
+  before_action :set_data_entry, only: %i[show edit update destroy]
 
   # GET /data_entries/new
   def new
@@ -33,32 +23,23 @@ class DataEntriesController < ApplicationController
     end
   end
 
-  # DELETE /data_entries/1
-  # DELETE /data_entries/1.json
-  def destroy
-    @data_entry.destroy
-    respond_to do |format|
-      format.html { redirect_to data_entries_url, notice: 'Data entry was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_data_entry
+    @data_entry = DataEntry.find(params[:id])
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_data_entry
-      @data_entry = DataEntry.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def data_entry_params
-      params.require(:data_entry).permit(
-        :latitude,
-        :longitude,
-        :title,
-        :subtitle,
-        :username,
-        :notes,
-        :image
-      )
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def data_entry_params
+    params.require(:data_entry).permit(
+      :image,
+      :latitude,
+      :longitude,
+      :notes,
+      :subtitle,
+      :title,
+      :username
+    )
+  end
 end

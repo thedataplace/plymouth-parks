@@ -1,6 +1,7 @@
 ActiveAdmin.register AdminUser do
+  # Permitted params
   permit_params :email, :password, :password_confirmation
-
+  # List view
   index do
     selectable_column
     id_column
@@ -10,12 +11,12 @@ ActiveAdmin.register AdminUser do
     column :created_at
     actions
   end
-
+  # Filters
   filter :email
   filter :current_sign_in_at
   filter :sign_in_count
   filter :created_at
-
+  # Edit form
   form do |f|
     f.inputs do
       f.input :email
@@ -24,5 +25,4 @@ ActiveAdmin.register AdminUser do
     end
     f.actions
   end
-
 end
