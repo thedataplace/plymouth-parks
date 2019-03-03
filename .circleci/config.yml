@@ -70,7 +70,7 @@ jobs:
             bundle exec cucumber --format junit --out test_results/cucumber.xml
 
       # Run rubocop in parallel
-      # - run:
-      #     name: Run rubocop
-      #     command: |
-      #       bundle exec rubocop
+      - run:
+          name: Run rubocop
+          command: |
+            bundle exec rubocop
