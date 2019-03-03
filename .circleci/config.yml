@@ -52,7 +52,8 @@ jobs:
           name: run tests
           command: |
             mkdir /tmp/test-results
-            bundle exec rails test
+            bundle install
+            bin/rails test
 
       # collect reports
       - store_test_results:
@@ -72,4 +73,5 @@ jobs:
       - run:
           name: Run rubocop
           command: |
-            bundle exec rubocop
+            gem install rubocop
+            rubocop
