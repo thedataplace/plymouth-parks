@@ -17,8 +17,9 @@
 default: &default
   adapter: postgis
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  host: <%= ENV["POSTGRES_HOST"] %>
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -59,6 +60,9 @@ test: &test
   <<: *default
   database: plymouth-parks_test
 
+cucumber:
+  <<: *test
+
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -81,8 +85,3 @@ test: &test
 production:
   <<: *default
   database: plymouth-parks_production
-  username: plymouth-parks
-  password: <%= ENV['PLYMOUTH-PARKS_DATABASE_PASSWORD'] %>
-
-cucumber:
-  <<: *test
