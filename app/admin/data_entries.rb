@@ -19,9 +19,7 @@ ActiveAdmin.register DataEntry do
     column :longitude
     column :created_at
     column :image do |entry|
-      if entry.image.attached?
-        image_tag url_for(entry.image), width: '50'
-      end
+      image_tag(url_for(entry.image), width: '50') if entry.image.attached?
     end
     actions
   end
@@ -32,9 +30,7 @@ ActiveAdmin.register DataEntry do
       row :latitude
       row :longitude
       row :image do |entry|
-        if entry.image.attached?
-          image_tag url_for(entry.image), width: '500'
-        end
+        image_tag(url_for(entry.image), width: '50') if entry.image.attached?
       end
     end
   end
