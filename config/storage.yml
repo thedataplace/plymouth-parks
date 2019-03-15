@@ -13,7 +13,7 @@ amazon:
   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
   region: ams3
-  bucket: plymouth-parks-staging
+  bucket: dataplace-parks
   endpoint: https://ams3.digitaloceanspaces.com
 
 # Remember not to checkin your GCS keyfile to a repository
