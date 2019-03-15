@@ -6,6 +6,8 @@ AllCops:
     - lib/tasks/cucumber.rake
     - features/support/env.rb
     - vendor/bundle/**/*
+    - tmp/**/*
+    - storage/**/*
 Metrics/LineLength:
   Max: 160
 Style/BlockComments:
