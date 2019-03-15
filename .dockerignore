@@ -1,0 +1,21 @@
+.git
+.gitignore
+README.md
+
+#
+# OS X
+#
+.DS_Store
+
+#
+# Rails
+#
+.env.dev
+log
+tmp
+public/system
+test/
+
+.bundle
+.ruby-version
+.circleci

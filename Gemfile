@@ -41,6 +41,8 @@ gem 'rubocop', '~> 0.65.0', require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+# Use aws for image uploads to Digital Ocean spaces
+gem 'aws-sdk-s3'
 
 group :development, :test do
   gem 'pry-rails'
