@@ -3,13 +3,14 @@ version: '3'
 # Service definitions
 services:
   # Development database definition
-  db:
+  database:
     image: mdillon/postgis:9.5
     env_file: .env.dev
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+
   # Development application server definition
-  web:
+  app_server:
     build: .
     env_file: .env.dev
     volumes:
@@ -17,4 +18,4 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      - database
