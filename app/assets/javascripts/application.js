@@ -33,11 +33,11 @@ function geo_error(event) {
   alert("Sorry, no position available.");
 }
 
-var geo_options = {}
-//   enableHighAccuracy: true,
-//   maximumAge        : 1000,
-//   timeout           : 1000
-// };
+var geo_options = {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+  timeout: 5000
+};
 
 document.addEventListener("DOMContentLoaded", function(event) {
   if (window.location.href.match(/\/$/)) {
