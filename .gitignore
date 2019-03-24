@@ -7,6 +7,7 @@
 # Ignore bundler config.
 /.bundle
 .env.prod
+config/certbot/
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -27,3 +28,5 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+.DS_Store

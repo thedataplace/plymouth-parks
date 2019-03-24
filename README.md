@@ -15,29 +15,26 @@ This repository stores the source code for the data capture and mapping web appl
 
 Build web image
 ```shell
-docker-compose build web
+docker-compose -f docker-compose.dev.yml build app_server
 ```
 
 Set up database
 ```shell
-docker-compose run --rm web rails db:create \
-                                  db:gis:setup \
-                                  db:migrate
+docker-compose -f docker-compose.dev.yml run --rm app_server \
+  rails db:create db:gis:setup db:migrate
 ```
 
 Seed the database
 ```shell
-docker-compose run --rm web rails db:seed
+docker-compose -f docker-compose.dev.yml run --rm app_server rails db:seed
 ```
 
 Start development server
 ```shell
-docker-compose up
+docker-compose -f docker-compose.dev.yml up app_server
 ```
 
-### Configuration
-
-### Digital Ocean
+### Production Configuration
 
 Create Digital Ocean Droplet running Docker Engine
 ```shell
@@ -45,7 +42,7 @@ docker-machine create --driver=digitalocean \
                       --digitalocean-access-token=$DO_TOKEN \
                       --digitalocean-backups=true \
                       --digitalocean-image=ubuntu-18-04-x64 \
-                      --digitalocean-size=2gb \
+                      --digitalocean-size=s-1vcpu-2gb \
                       --digitalocean-region=lon1 \
                       [project-name]
 ```
@@ -55,28 +52,29 @@ Set up terminal to interact with remote host
 eval $(docker-machine env [project-name])
 ```
 
-Build prod web image
+Build production application server image
 ```shell
-docker-compose -f docker-compose.prod.yml build prod_web
+docker-compose -f docker-compose.prod.yml build app_server
 ```
 
-Build prod database and webserver images
+Start up production database and web server containers
 ```shell
-docker-compose -f docker-compose.prod.yml up -d webserver prod_db
+docker-compose -f docker-compose.prod.yml up -d web_server database
 ```
 
 Initialize production database
 ```shell
-docker-compose -f docker-compose.prod.yml run --rm prod_web \
-  rails db:create db:gis:setup db:migrate
+docker-compose -f docker-compose.prod.yml run --rm app_server rails db:create \
+                                                                    db:gis:setup \
+                                                                    db:migrate
 ```
 
-Start up application server
+Start up production application server container
 ```shell
-docker-compose -f docker-compose.prod.yml up -d prod_web
+docker-compose -f docker-compose.prod.yml up -d app_server
 ```
 
-Restart webserver
+Restart production web server
 ```shell
-docker-compose -f docker-compose.prod.yml restart webserver
+docker-compose -f docker-compose.prod.yml restart web_server
 ```

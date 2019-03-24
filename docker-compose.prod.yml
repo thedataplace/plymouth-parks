@@ -4,39 +4,61 @@ version: "3"
 volumes:
   assets:
     external: false
-  configs:
+  nginx-configs:
     external: false
   db-data:
+    external: false
+  nginx-ssl-configs:
+    external: false
+  ssl-configs:
+    external: false
+  certbot-configs:
     external: false
 
 # Service definitions
 services:
   # Webserver proxy
-  webserver:
+  web_server:
     image: "nginx:1.11.8"
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - assets:/usr/share/nginx/html
-      - configs:/etc/nginx/conf.d
+      - certbot-configs:/var/www/certbot
+      - nginx-configs:/etc/nginx/conf.d
+      - nginx-ssl-configs:/etc/letsencrypt
+      - ssl-configs:/etc/letsencrypt/live
+
+  # Certbot
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - certbot-configs:/var/www/certbot
+      - nginx-ssl-configs:/etc/letsencrypt
+      - ssl-configs:/etc/letsencrypt/live
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   # Production database
-  prod_db:
+  database:
     image: mdillon/postgis:9.5
     env_file: .env.prod
     volumes:
       - db-data:/var/lib/postgresql/db-data
 
   # Production application server
-  prod_web:
+  app_server:
     build: .
     env_file: .env.prod
     ports:
       - "3000:3000"
     volumes:
       - assets:/usr/share/nginx/html
-      - configs:/etc/nginx/conf.d
+      - certbot-configs:/var/www/certbot
+      - nginx-configs:/etc/nginx/conf.d
+      - nginx-ssl-configs:/etc/letsencrypt
+      - ssl-configs:/etc/letsencrypt/live
     depends_on:
-      - prod_db
-      - webserver
+      - database
+      - web_server
