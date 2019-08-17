@@ -4,6 +4,8 @@ FROM ruby:2.4.5
 RUN apt-get update -qq
 # Install system dependencies
 RUN apt-get install -y nodejs postgresql-client
+
+RUN apt-get install -y cron
 # Create app directory
 RUN mkdir /plymouth-parks
 # Make the newly created directory the working directory

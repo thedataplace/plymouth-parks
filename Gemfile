@@ -45,6 +45,8 @@ gem 'mini_magick'
 # Use aws for image uploads to Digital Ocean spaces
 gem 'aws-sdk-s3'
 
+gem 'whenever', require: false
+
 group :development, :test do
   gem 'pry-rails'
   # Database cleaner
