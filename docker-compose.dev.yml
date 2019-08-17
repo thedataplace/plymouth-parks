@@ -6,6 +6,8 @@ services:
   database:
     image: mdillon/postgis:9.5
     env_file: .env.dev
+    ports:
+      - "5432:5432"
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
 
