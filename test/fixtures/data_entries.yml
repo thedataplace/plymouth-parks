@@ -8,10 +8,12 @@ one:
   username: MyString
   notes: MyText
 
-two:
+with_persisted_image_storage_url:
   latitude: 50.393756
   longitude: -4.149570
   title: MyText
   subtitle: MyText
   username: MyString
   notes: MyText
+  image_storage_url: http://image-service-url.com/12345
+  image_storage_url_expiry_date: <%= (Date.today + 6.days).to_s(:db) %>
