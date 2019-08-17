@@ -7,8 +7,8 @@
 
 ENV.each { |k, v| env(k, v) }
 
-set :output, "/plymouth-parks/log/cron_log.log"
+set :output, '/plymouth-parks/log/cron_log.log'
 
 every 1.day at: '12:00 am' do
-  rake "image_storage_urls:sync"
+  rake 'image_storage_urls:sync'
 end
