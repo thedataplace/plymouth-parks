@@ -1,0 +1,6 @@
+if [ "$1" = "down" ]
+then
+  echo "DO NOT RUN DOCKER-COMPOSE DOWN ON PRODUCTION!"
+else
+  docker-compose -f docker-compose.prod.yml $@
+fi

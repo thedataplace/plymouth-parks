@@ -1,0 +1,6 @@
+if [ -z "$DOCKER_MACHINE_NAME" ]
+then
+  docker-compose -f docker-compose.dev.yml  $@
+else
+  echo "docked to production ENV $DOCKER_MACHINE_NAME"
+fi

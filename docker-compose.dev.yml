@@ -2,7 +2,6 @@
 version: '3'
 # Service definitions
 services:
-  # Development database definition
   database:
     image: mdillon/postgis:9.5
     env_file: .env.dev
@@ -11,13 +10,25 @@ services:
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
 
-  # Development application server definition
   app_server:
     build: .
     env_file: .env.dev
     volumes:
       - .:/plymouth-parks
+      - /plymouth-parks/node_modules
     ports:
       - "3000:3000"
     depends_on:
       - database
+
+  # webpacker:
+  #   build: .
+  #   env_file:
+  #     - '.env.dev'
+  #   command: bash -c "rm -rf /public/packs; ./bin/webpack-dev-server"
+  #   volumes:
+  #     - .:/plymouth-parks
+  #   ports:
+  #     - '3035:3035'
+  #   depends_on:
+  #     - app_server

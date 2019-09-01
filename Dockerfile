@@ -1,9 +1,9 @@
 # Base Docker image for Ruby
-FROM ruby:2.4.5
+FROM starefossen/ruby-node:2-10
 # Update system
 RUN apt-get update -qq
 # Install system dependencies
-RUN apt-get install -y nodejs postgresql-client
+RUN apt-get install -y postgresql-client
 
 RUN apt-get install -y cron
 # Create app directory
@@ -16,6 +16,8 @@ COPY Gemfile /plymouth-parks/Gemfile
 COPY Gemfile.lock /plymouth-parks/Gemfile.lock
 # Run bundler
 RUN bundle install
+# Run yarn
+RUN yarn install
 # Copy app over
 COPY . /plymouth-parks
 # Expose port

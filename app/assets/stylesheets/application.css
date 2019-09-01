@@ -11,6 +11,8 @@
  * It is generally better to create a new file per style scope.
  *
  *= stub "active_admin"
- *= require_tree .
+ *= require mapbox-gl
+ *= require mapbox-gl-geocoder
  *= require_self
+ *= require_tree .
  */

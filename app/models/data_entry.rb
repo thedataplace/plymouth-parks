@@ -1,7 +1,9 @@
 # Abstracts data entry database table
 class DataEntry < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   has_one_attached :image
-  # has_one_attached :secondary_image
+  has_one_attached :secondary_image
 
   after_save :save_image_storage_url!
 
@@ -20,10 +22,16 @@ class DataEntry < ApplicationRecord
   def image_url
     return unless image.attached?
 
-    image.variant(auto_orient: true).processed.service_url
+    if Rails.env.production?
+      image.variant(auto_orient: true).processed.service_url
+    else
+      rails_blob_path(image)
+    end
   end
 
   def save_image_storage_url!
+    return if Rails.env.development?
+
     if image_url
       update_columns(image_storage_url: image_url,
                      image_storage_url_expiry_date: DataEntry.expiry_date)
