@@ -22,7 +22,7 @@ function buildMap () {
   map.on('style.load', function() {
     map.addSource('trees-data', {
       type: 'geojson',
-      data: 'http://gis.thedata.place/api/v1/geojson/data_geom?geom_column=geom&columns=id%2C%20title%2C%20image_storage_url'
+      data: 'https://gis.thedata.place/api/v1/geojson/data_geom?geom_column=geom&columns=id%2C%20title%2C%20image_storage_url'
     });
 
     map.addLayer({

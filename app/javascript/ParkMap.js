@@ -21,26 +21,28 @@ class ParkMap extends Component {
   render () {
     return (
       <div id="park-map">
-        <div id='menu'>
-          <input
-            checked={this.state.box === 'streets-v11'}
-            id='streets-v11'
-            name='rtoggle'
-            type='radio'
-            value='streets'
-            onChange={this.onChange}
-          />
-          <label htmlFor='streets'>Streets</label>
+        <div id="map-container">
+          <div id='menu'>
+            <input
+              checked={this.state.box === 'streets-v11'}
+              id='streets-v11'
+              name='rtoggle'
+              type='radio'
+              value='streets'
+              onChange={this.onChange}
+            />
+            <label htmlFor='streets'>Streets</label>
 
-          <input
-            checked={this.state.box === 'satellite-v9'}
-            id='satellite-v9'
-            name='rtoggle'
-            type='radio'
-            value='satellite'
-            onChange={this.onChange}
-          />
-          <label htmlFor='satellite'>Satellite</label>
+            <input
+              checked={this.state.box === 'satellite-v9'}
+              id='satellite-v9'
+              name='rtoggle'
+              type='radio'
+              value='satellite'
+              onChange={this.onChange}
+            />
+            <label htmlFor='satellite'>Satellite</label>
+          </div>
         </div>
 
         <div id="map-container">

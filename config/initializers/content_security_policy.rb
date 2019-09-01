@@ -5,7 +5,12 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
 Rails.application.config.content_security_policy do |policy|
-  policy.default_src :self, :https, :blob, 'http://192.168.0.12:3000'
+  policy.default_src :self,
+                     :https,
+                     :blob,
+                     'http://192.168.0.12:3000',
+                     'https://parks.thedata.place'
+
   policy.font_src    :self, :https, :data
   policy.img_src     :self, :https, :data, :blob
   policy.object_src  :none
@@ -20,6 +25,11 @@ Rails.application.config.content_security_policy do |policy|
                        'ws://localhost:3035',
                        'http://0.0.0.0:3035',
                        'ws://0.0.0.0:3035',
+                       'http://gis.thedata.place',
+                       'https://dataplace-parks.ams3.digitaloceanspaces.com'
+  else
+    policy.connect_src :self,
+                       :https,
                        'http://gis.thedata.place',
                        'https://dataplace-parks.ams3.digitaloceanspaces.com'
   end

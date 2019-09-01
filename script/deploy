@@ -1,0 +1,3 @@
+./script/prod build app_server
+./script/prod up -d app_server
+./script/prod restart web_server
