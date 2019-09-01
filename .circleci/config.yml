@@ -53,6 +53,7 @@ jobs:
           command: |
             mkdir /tmp/test-results
             bundle install
+            yarn install
             bundle exec rails webpacker:compile
             bin/rails test
 
