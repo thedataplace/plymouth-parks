@@ -1,5 +1,6 @@
 module API
   module V1
+    # API controller for data entries
     class DataEntriesController < MainController
       # deserializable_resource :note, only: [:create, :update]
       # before_action :set_note, only: [:show, :update, :destroy]

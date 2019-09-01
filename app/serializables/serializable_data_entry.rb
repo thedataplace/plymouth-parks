@@ -1,3 +1,4 @@
+# JSONAPI serializer for data entries
 class SerializableDataEntry < JSONAPI::Serializable::Resource
   type 'data_entries'
 

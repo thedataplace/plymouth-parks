@@ -7,6 +7,7 @@ AllCops:
     - features/support/env.rb
     - vendor/bundle/**/*
     - tmp/**/*
+    - node_modules/**/*
     - storage/**/*
 Metrics/LineLength:
   Max: 160

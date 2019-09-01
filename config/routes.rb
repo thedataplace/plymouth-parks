@@ -23,6 +23,5 @@ Rails.application.routes.draw do
 
   root 'landing_page#index'
 
-
   # match '*path', to: 'react#index', via: :all
 end
