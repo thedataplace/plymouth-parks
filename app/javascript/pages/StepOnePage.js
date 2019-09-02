@@ -23,7 +23,6 @@ const geoOptions = {
 }
 
 export function geoSuccess (position, setCoordinates) {
-  console.log('geoSuccess')
   const { latitude, longitude } = position.coords
   setCoordinates({ latitude, longitude })
   window.formData.coordinates = { latitude, longitude }

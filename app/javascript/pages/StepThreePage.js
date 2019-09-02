@@ -75,6 +75,7 @@ export async function submitForm (details, history) {
     entryFormData.append('data_entry[longitude]', coordinates.longitude)
     const response = await saveDataEntry(entryFormData)
     if (response.status === 201) {
+      window.formData = { images: {}, coordinates: {} }
       history.push('/trees')
     }
   }
@@ -151,21 +152,3 @@ function StepThreePage ({ history }) {
 }
 
 export default StepThreePage
-
-// <div className="row pb">
-//   <DataEntryImage fileName="PRIMARY_IMAGE" />
-// </div>
-//
-// <div className="row pb">
-//   <DataEntryImage fileName="SECONDARY_IMAGE" />
-// </div>
-//
-// <div className="row pb">
-//   <LinkButton className="btn" to="/step-two">Go Back</LinkButton>
-// </div>
-//
-// <div className="row pb">
-//   <button className="btn" onClick={() => submitForm(history)}>
-//     Submit Entry
-//   </button>
-// </div>
