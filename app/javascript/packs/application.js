@@ -14,7 +14,10 @@ import PropTypes from 'prop-types'
 
 import App from 'App'
 
-window.images = {}
+window.formData = {
+  images: {},
+  coordinates: {}
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(

@@ -1,4 +1,8 @@
-import { csrfToken } from './utils'
+export function csrfToken () {
+  const $token = document.querySelector('meta[name="csrf-token"]')
+  if ((window.location.pathname === 'blank') || (!$token)) return ''
+  return $token.getAttribute('content')
+}
 
 export function headers () {
   return {

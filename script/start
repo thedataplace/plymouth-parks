@@ -31,4 +31,6 @@ whenever --update-crontab
 
 service cron start
 
+yarn install --check-files
+
 rails server -b 0.0.0.0 -P /tmp/puma.pid

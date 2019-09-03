@@ -5,7 +5,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import ParkMap from '../ParkMap'
+import ParkMap from '../components/ParkMap'
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
