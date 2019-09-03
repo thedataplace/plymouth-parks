@@ -6,8 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 
 import ParkMap from '../components/ParkMap'
-import NavigationBar from '../components/NavigationBar'
-
+import LandingPageNavigationBar from '../components/LandingPageNavigationBar'
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -16,8 +15,8 @@ const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
-  }
-}))
+  },
+}));
 
 function Copyright() {
   return (
@@ -32,14 +31,15 @@ function Copyright() {
   )
 }
 
-function HomePage ({ showAddButton = true }) {
+function LandingPage ({ showAddButton = true }) {
   const classes = useStyles()
   return (
     <div id="home-page">
       <main>
-        <NavigationBar showAddButton={showAddButton} />
-        <ParkMap />
+      <LandingPageNavigationBar />
+      <ParkMap />
       </main>
+      {/* Footer */}
       <footer className={classes.footer}>
         <Copyright />
       </footer>
@@ -47,4 +47,4 @@ function HomePage ({ showAddButton = true }) {
   )
 }
 
-export default HomePage
+export default LandingPage
