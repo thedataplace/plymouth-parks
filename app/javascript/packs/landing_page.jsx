@@ -5,11 +5,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import ParkMap from '../components/ParkMap'
+import LandingPage from '../pages/LandingPage'
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <ParkMap />,
+    <LandingPage />,
     document.body.appendChild(document.createElement('div')),
   )
 })
