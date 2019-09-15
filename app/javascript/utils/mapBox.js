@@ -13,6 +13,8 @@ export function buildMap (lng = -4.148052, lat = 50.382439, zoom = 15) {
     zoom // starting zoom
   });
 
+  map.scrollZoom.disable()
+
   // Add zoom and rotation controls to the map.
   map.addControl(new mapboxgl.NavigationControl());
 
@@ -64,6 +66,10 @@ export function buildMap (lng = -4.148052, lat = 50.382439, zoom = 15) {
     map.on('mouseleave', 'trees', function() {
       map.getCanvas().style.cursor = '';
     });
+
+    new mapboxgl.Marker()
+      .setLngLat([lng, lat])
+      .addTo(map)
 
     var layerList = document.getElementById('menu');
     var inputs = layerList.getElementsByTagName('input');

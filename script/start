@@ -9,6 +9,7 @@ fi
 if [[ $RAILS_ENV == "production" ]]; then
   # Precompile assets
   rails assets:precompile
+  rails webpacker:compile
   # Migrate database
   rails db:migrate
   # Create nginx html directory

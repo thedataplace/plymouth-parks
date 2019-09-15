@@ -4,8 +4,10 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
+import Container from '@material-ui/core/Container'
 
 import ParkMap from '../components/ParkMap'
+import Copyright from '../components/Copyright'
 import LandingPageNavigationBar from '../components/LandingPageNavigationBar'
 
 const useStyles = makeStyles(theme => ({
@@ -18,26 +20,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      Crafted by { ' ' }
-      <Link color="inherit" href="https://thedata.place">
-      The Data Place
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
 function LandingPage ({ showAddButton = true }) {
   const classes = useStyles()
   return (
     <div id="home-page">
       <main>
       <LandingPageNavigationBar />
-      <ParkMap />
+      <Container maxWidth="md">
+        <ParkMap />
+      </Container>
       </main>
       {/* Footer */}
       <footer className={classes.footer}>

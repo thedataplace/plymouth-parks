@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
 
+import treeImageSrc from '../images/tree-image.png'
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -24,9 +26,7 @@ function PlaceHolderImage () {
   return (
     <Container>
       <Paper className={classes.root}>
-        <Typography variant="h6">
-          Review your photo here.
-        </Typography>
+        <img id="image" src={treeImageSrc} className="center-image" />
       </Paper>
     </Container>
   )

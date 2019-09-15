@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import NavigationBar from '../components/NavigationBar'
 import WalkThroughBreadCrumbs from '../components/WalkThroughBreadCrumbs'
 import StepThreePageInputGroup from '../components/StepThreePageInputGroup'
+import SuccessDialog from '../components/SuccessDialog'
 
 // Utilities
 import { saveDataEntry } from '../utils/api'
@@ -47,7 +48,7 @@ const DEFAULT_DETAILS = {
   notes: ''
 }
 
-export async function submitForm (details, history) {
+export async function submitForm (details, setRequestStatus) {
   const primaryImageFile = getFileFromWindowImages('PRIMARY_IMAGE')
   const secondaryImageFile = getFileFromWindowImages('SECONDARY_IMAGE')
   const coordinates = window.formData.coordinates
@@ -59,7 +60,7 @@ export async function submitForm (details, history) {
   } else if (!coordinates.longitude || !coordinates.latitude) {
     window.alert(
       `There was a problem determining your location. Please go back
-      to Step #1 and click the "Retry Geolocation" button get the tree's
+      to Step #1 and click the "Retry" button get the tree's
       geographic coordinates.
       `
     )
@@ -76,7 +77,9 @@ export async function submitForm (details, history) {
     const response = await saveDataEntry(entryFormData)
     if (response.status === 201) {
       window.formData = { images: {}, coordinates: {} }
-      history.push('/trees')
+      setRequestStatus('SUCCESS')
+    } else {
+      setRequestStatus('FAILURE')
     }
   }
 }
@@ -95,7 +98,14 @@ export function DataEntryImage ({ fileName }) {
 
 function StepThreePage ({ history }) {
   const [details, setDetails] = useState(DEFAULT_DETAILS)
+  const [requestStatus, setRequestStatus] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   const classes = useStyles()
+
+  function triggerSubmit () {
+    setIsLoading(true)
+    submitForm(details, setRequestStatus)
+  }
 
   return (
     <div>
@@ -140,13 +150,15 @@ function StepThreePage ({ history }) {
         variant="contained"
         fullWidth
         color="default"
+        disabled={isLoading}
         className={classes.submitButton}
-        onClick={() => submitForm(details, history)}
+        onClick={triggerSubmit}
       >
         Upload
         <CloudUpload className={classes.rightIcon} />
       </Button>
       <br/>
+      <SuccessDialog open={requestStatus === 'SUCCESS'} history={history} />
     </div>
   )
 }

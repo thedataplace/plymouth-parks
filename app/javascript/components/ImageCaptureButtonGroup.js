@@ -1,14 +1,15 @@
-import React from 'react';
-import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { withRouter } from 'react-router-dom';
+import React from 'react'
+// import clsx from 'clsx'
+
+import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import { withRouter } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   iconSmall: {
     fontSize: 20,
   },
-}));
+}))
 
 const ImageCaptureButtonGroup = withRouter(({
   history,

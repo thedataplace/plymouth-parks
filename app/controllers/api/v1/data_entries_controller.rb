@@ -53,6 +53,7 @@ module API
       def data_entry_params
         params.require(:data_entry).permit(
           :image,
+          :secondary_image,
           :latitude,
           :longitude,
           :notes,

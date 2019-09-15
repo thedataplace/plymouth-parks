@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 // Material UI
+import { makeStyles } from '@material-ui/core/styles'
+
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import Button from '@material-ui/core/Button'
 
 // Custom components
 import ImageCaptureButtonGroup from '../components/ImageCaptureButtonGroup'
@@ -11,6 +15,7 @@ import NavigationBar from '../components/NavigationBar'
 import ParkMap from '../components/ParkMap'
 import PlaceHolderImage from '../components/PlaceHolderImage'
 import WalkThroughBreadCrumbs from '../components/WalkThroughBreadCrumbs'
+
 
 // Utilities
 import { buildMap } from '../utils/mapBox'
@@ -53,7 +58,24 @@ export function DataEntryImage ({ imageFile }) {
   }
 }
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    flex: 1,
+    textAlign: 'center'
+  },
+  button: {
+    textAlign: 'center'
+  },
+  rightIcon: {
+    marginLeft: theme.spacing(1),
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
+}))
+
 function StepOnePage () {
+  const classes = useStyles()
   const defaultImageFile = getFileFromWindowImages('SECONDARY_IMAGE')
   const [imageFile, setImageFile] = useState(defaultImageFile)
   const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null })
@@ -78,28 +100,75 @@ function StepOnePage () {
   return (
     <div>
       <NavigationBar />
+
       <br/>
+
       <WalkThroughBreadCrumbs />
+
       <br/>
+
       <Container>
         <Typography variant="h5" gutterBottom>
           Step 1: Identify & Geolocate
         </Typography>
+
         <br/>
+
         <Typography variant="h6" gutterBottom>
           Take a photo of the bark or leaf of the tree.
           Make sure to stand as close as possible to the trunk of the tree,
           when you take the photo.
         </Typography>
       </Container>
+
       <br/>
+
       <ImageCaptureButtonGroup
         backLink="/trees"
         nextLink="/trees/step-two"
         selectedImages={selectedImages}
       >
+        <Typography variant="h5" gutterBottom align="center">
+          A. Review your photo
+        </Typography>
+
+        <br/>
+
         <DataEntryImage imageFile={imageFile} />
-        <Container>
+
+        <br/>
+
+        <Typography variant="h5" gutterBottom align="center">
+          B. Review your location
+        </Typography>
+
+        <br/>
+
+        <Container maxWidth="sm">
+          <Typography variant="h6" gutterBottom>
+            If your location doesn't look right, press the "Retry" button.
+            You may need to retry geolocating a couple times to get an accurate
+            reading.
+          </Typography>
+        </Container>
+
+        <br/>
+
+        <Container className={classes.root} maxWidth="sm">
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.button}
+            onClick={() => getCurrentLocation(setCoordinates)}
+          >
+            Retry
+            <RefreshIcon className={classes.rightIcon} />
+          </Button>
+        </Container>
+
+        <br/>
+
+        <Container maxWidth="sm">
           <ParkMap defaultZoom={15} />
         </Container>
       </ImageCaptureButtonGroup>
