@@ -2,15 +2,23 @@
 
 // TODO: Reactify
 
-export function buildMap (lng = -4.148052, lat = 50.382439, zoom = 15) {
-  mapboxgl.accessToken = 'pk.eyJ1IjoiamFtZXNtaWxuZXIiLCJhIjoiY2prNzA2aGprMWt0MTNydGhuMWs3NG13NSJ9.hRj9NRx4ROa0QDkT4t9XdQ';
+export function buildMap (options) {
+  const {
+    longitude = -4.148052,
+    latitude = 50.382439,
+    zoom = 15,
+    interactive = true
+  } = options
 
+  mapboxgl.accessToken = 'pk.eyJ1IjoiamFtZXNtaWxuZXIiLCJhIjoiY2prNzA2aGprMWt0MTNydGhuMWs3NG13NSJ9.hRj9NRx4ROa0QDkT4t9XdQ';
+  // stylesheet location
+  // style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/styles/open-zoomstack-outdoor/style.json', // stylesheet location
   var map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-    //style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/styles/open-zoomstack-outdoor/style.json', // stylesheet location
-    center: [lng, lat], // starting position [lng, lat]
-    zoom // starting zoom
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [longitude, latitude],
+    zoom,
+    interactive
   });
 
   map.scrollZoom.disable()
@@ -67,10 +75,7 @@ export function buildMap (lng = -4.148052, lat = 50.382439, zoom = 15) {
       map.getCanvas().style.cursor = '';
     });
 
-    new mapboxgl.Marker()
-      .setLngLat([lng, lat])
-      .addTo(map)
-
+    new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map)
     var layerList = document.getElementById('menu');
     var inputs = layerList.getElementsByTagName('input');
 

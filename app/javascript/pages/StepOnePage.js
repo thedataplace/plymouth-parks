@@ -168,8 +168,8 @@ function StepOnePage () {
 
         <br/>
 
-        <Container maxWidth="sm">
-          <ParkMap defaultZoom={15} />
+        <Container maxWidth="lg">
+          <ParkMap defaultZoom={15} interactive={false} />
         </Container>
       </ImageCaptureButtonGroup>
     </div>

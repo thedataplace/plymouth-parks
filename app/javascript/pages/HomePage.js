@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   footer: {
+    marginTop: theme.spacing(10),
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   }
