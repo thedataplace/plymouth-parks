@@ -12,7 +12,12 @@ class ParkMap extends Component {
   }
 
   componentDidMount () {
-    buildMap(-4.148052, 50.382439, this.props.defaultZoom)
+    buildMap({
+      longitude: -4.148052,
+      latitude: 50.382439,
+      zoom: this.props.defaultZoom,
+      interactive: this.props.interactive
+    })
   }
 
   onChange = ({ target }) => {

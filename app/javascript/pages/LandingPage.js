@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   footer: {
+    marginTop: theme.spacing(10),
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
@@ -26,7 +27,7 @@ function LandingPage ({ showAddButton = true }) {
     <div id="home-page">
       <main>
       <LandingPageNavigationBar />
-      <Container maxWidth="md">
+      <Container maxWidth="xlg">
         <ParkMap />
       </Container>
       </main>
