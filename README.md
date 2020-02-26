@@ -171,3 +171,21 @@ AdminUser.create!(email: '[EMAIL]', password: '[PASSWORD]', password_confirmatio
 With this main administrator account you can add additional users from the admin panel.
 
 To access the admin panel go to [http://insert-your-domain.com/admin]()
+
+### Troubleshooting
+
+The site runs on 4 separate Docker images on the Digital Ocean server:  
+- plymouth-parks_app_server
+- postgis
+- certbot
+- nginx.
+logging on to the server with a sudo-capable account allows use of the main docker commands.  
+list containers:  
+```
+sudo docker ps -a
+```
+start stopped containers:  
+```
+sudo docker start <containerid>
+```
+More details available here: https://phoenixnap.com/kb/how-to-list-start-stop-docker-containers 
