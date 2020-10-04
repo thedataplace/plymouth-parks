@@ -29,6 +29,16 @@ class DataEntry < ApplicationRecord
     end
   end
 
+  def secondary_image_url
+    return unless secondary_image.attached?
+
+    if Rails.env.production?
+      secondary_image.variant(auto_orient: true).processed.service_url
+    else
+      rails_blob_path(secondary_image)
+    end
+  end
+
   def save_image_storage_url!
     return if Rails.env.development?
 

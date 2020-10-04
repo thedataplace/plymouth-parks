@@ -1,0 +1,6 @@
+<% if flash.now[:alert] %>
+<div id="error_explanation">
+  <h2><%= flash.now[:alert] %></h2>
+</div>
+<% end %>
+<%= react_component('LoginPage', csrfToken: session[:_csrf_token]) %>

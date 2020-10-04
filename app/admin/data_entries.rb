@@ -18,7 +18,10 @@ ActiveAdmin.register DataEntry do
     column :latitude
     column :longitude
     column :created_at
-    column :image do |entry|
+    column :username do |entry|
+      entry.username
+    end
+    column :primary_image do |entry|
       image_tag(entry.image_url) if entry.image.attached?
     end
     actions
@@ -29,8 +32,11 @@ ActiveAdmin.register DataEntry do
       row :subtitle
       row :latitude
       row :longitude
-      row :image do |entry|
+      row :primary do |entry|
         image_tag(entry.image_url) if entry.image.attached?
+      end
+      row :secondary do |entry|
+        image_tag(entry.secondary_image_url) if entry.secondary_image.attached?
       end
     end
   end

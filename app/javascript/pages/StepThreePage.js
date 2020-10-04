@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   submitButton: {
     color: 'white',
-    backgroundColor: '#00796b'
+    backgroundColor: '#00693E'
   }
 }))
 
@@ -53,9 +53,7 @@ export async function submitForm (details, setRequestStatus) {
   const secondaryImageFile = getFileFromWindowImages('SECONDARY_IMAGE')
   const coordinates = window.formData.coordinates
 
-  if (!details.username || details.username === '') {
-    window.alert('You must enter your name.')
-  } else if (!primaryImageFile || !secondaryImageFile) {
+  if (!primaryImageFile || !secondaryImageFile) {
     window.alert('You must include a primary and secondary image.')
   } else if (!coordinates.longitude || !coordinates.latitude) {
     window.alert(
@@ -71,7 +69,7 @@ export async function submitForm (details, setRequestStatus) {
     entryFormData.append('data_entry[image]', primaryImageFile)
     entryFormData.append('data_entry[secondary_image]', secondaryImageFile)
     entryFormData.append('data_entry[notes]', details.notes)
-    entryFormData.append('data_entry[username]', details.username)
+    entryFormData.append('data_entry[username]', window.CURRENT_USER.name)
     entryFormData.append('data_entry[latitude]', coordinates.latitude)
     entryFormData.append('data_entry[longitude]', coordinates.longitude)
     const response = await saveDataEntry(entryFormData)
@@ -114,51 +112,49 @@ function StepThreePage ({ history }) {
       <WalkThroughBreadCrumbs />
       <br/>
       <Container>
-        <Typography variant="h5" gutterBottom>
-          Step 3: Details, Review & Submit
-        </Typography>
+        <Container>
+          <Typography variant="h5" gutterBottom>
+            Step 3: Details, Review & Submit
+          </Typography>
+          <br/>
+          <Typography variant="h6" gutterBottom>
+          { /* Enter additional instructions here */ }
+          </Typography>
+        </Container>
+        <StepThreePageInputGroup details={details} setDetails={setDetails} />
+        <div className={classes.root}>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1" gutterBottom align="center">
+                Primary Image
+              </Typography>
+              <DataEntryImage fileName="PRIMARY_IMAGE" />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1" gutterBottom align="center">
+                Secondary Image
+              </Typography>
+              <DataEntryImage fileName="SECONDARY_IMAGE" />
+            </Grid>
+          </Grid>
+        </div>
         <br/>
-        <Typography variant="h6" gutterBottom>
-        { /* Enter additional instructions here */ }
-        </Typography>
+        <Button
+          size="medium"
+          variant="contained"
+          fullWidth
+          color="default"
+          disabled={isLoading}
+          className={classes.submitButton}
+          onClick={triggerSubmit}
+        >
+          Upload
+          <CloudUpload className={classes.rightIcon} />
+        </Button>
+        <br/>
+        <SuccessDialog open={requestStatus === 'SUCCESS'} history={history} />
+        <br/>
       </Container>
-
-      <StepThreePageInputGroup
-        details={details}
-        setDetails={setDetails}
-      />
-
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Typography variant="subtitle1" gutterBottom>
-              Primary Image
-            </Typography>
-            <DataEntryImage fileName="PRIMARY_IMAGE" />
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="subtitle1" gutterBottom>
-              Secondary Image
-            </Typography>
-            <DataEntryImage fileName="SECONDARY_IMAGE" />
-          </Grid>
-        </Grid>
-      </div>
-      <br/>
-      <Button
-        size="medium"
-        variant="contained"
-        fullWidth
-        color="default"
-        disabled={isLoading}
-        className={classes.submitButton}
-        onClick={triggerSubmit}
-      >
-        Upload
-        <CloudUpload className={classes.rightIcon} />
-      </Button>
-      <br/>
-      <SuccessDialog open={requestStatus === 'SUCCESS'} history={history} />
     </div>
   )
 }

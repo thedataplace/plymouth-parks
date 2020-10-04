@@ -42,30 +42,28 @@ function ImageCapturePage () {
   return (
     <div>
       <NavigationBar />
-
       <br/>
-
       <WalkThroughBreadCrumbs />
-
       <br/>
-
       <Container>
-        <Typography variant="h5" gutterBottom>
-          Step 2: Photograph the whole tree
-        </Typography>
+        <Container>
+          <Typography variant="h5" gutterBottom>
+            Step 2: Photograph the whole tree
+          </Typography>
 
-        <Typography variant="h6" gutterBottom>
-          Walk away from the tree and capture a photo the entire tree.
-        </Typography>
+          <Typography variant="h6" gutterBottom>
+            Walk away from the tree and capture a photo the entire tree.
+          </Typography>
+        </Container>
+
+        <ImageCaptureButtonGroup
+          backLink="/trees/step-one"
+          nextLink="/trees/step-three"
+          selectedImages={selectImage}
+        >
+          <DataEntryImage imageFile={imageFile} />
+        </ImageCaptureButtonGroup>
       </Container>
-
-      <ImageCaptureButtonGroup
-        backLink="/trees/step-one"
-        nextLink="/trees/step-three"
-        selectedImages={selectImage}
-      >
-        <DataEntryImage imageFile={imageFile} />
-      </ImageCaptureButtonGroup>
     </div>
   )
 }

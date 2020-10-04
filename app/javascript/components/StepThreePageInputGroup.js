@@ -61,21 +61,7 @@ function DetailsInputGroup ({ details, setDetails }) {
       />
       <TextField
         fullWidth
-        helperText="Your name"
-        id="username"
-        InputLabelProps={{ shrink: true }}
-        label="Username"
-        margin="normal"
-        name="username"
-        onChange={handleChange}
-        placeholder="Jane Smith"
-        style={{ margin: 8 }}
-        value={details.username}
-        variant="filled"
-      />
-      <TextField
-        fullWidth
-        helperText="Helpful notes aboutthe entries"
+        helperText="Helpful notes about the entry"
         id="notes"
         InputLabelProps={{ shrink: true }}
         label="Notes"

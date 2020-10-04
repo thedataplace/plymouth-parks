@@ -1,1 +1,7 @@
+<%# link_to('Logout', destroy_user_session_path, method: :delete) %>
+
+<script type="text/javascript">
+  window.FEATURE_FLAGS = "<%= @feature_flags.to_s %>"
+</script>
+
 <%= javascript_pack_tag 'landing_page' %>

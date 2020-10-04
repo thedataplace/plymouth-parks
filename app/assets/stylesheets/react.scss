@@ -95,3 +95,49 @@ body {
   display: inline-block;
   width: 100%;
 }
+
+
+.sign-in-form {
+  display: block;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+}
+
+.sign-in-form input[type=email] {
+  display: block;
+  width: 100%;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.sign-in-form input[type=password] {
+  display: block;
+  width: 100%;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.login-button {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: #4CAF50;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#error_explanation {
+  margin-top: 64px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#error_explanation h2 {
+  text-align: center;
+}

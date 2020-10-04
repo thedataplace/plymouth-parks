@@ -1,4 +1,6 @@
 import React from 'react'
+import { withRouter, Link as RouterLink } from 'react-router-dom'
+
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -9,11 +11,12 @@ import MenuIcon from '@material-ui/icons/Menu'
 import AddIcon from '@material-ui/icons/Add'
 import Fab from '@material-ui/core/Fab'
 import Link from '@material-ui/core/Link'
-import { withRouter, Link as RouterLink } from 'react-router-dom'
+
+import { isFeatureEnabled, isLoggedIn } from '../utils/auth'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
-    background: '#009688'
+    background: '#00693E'
   },
   root: {
     flexGrow: 1,
@@ -30,11 +33,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function RightActionButton ({ onAddButtonClick }) {
+  if (!isFeatureEnabled('tree-data-capture')) return ''
+
+  const classes = useStyles()
+
+  if (isLoggedIn()) {
+    return (
+      <Link href="/users/sign_out" rel="nofollow"  className={classes.linkTitle} data-method="delete">
+        <Button color="inherit">Logout</Button>
+      </Link>
+    )
+  } else {
+    return (
+      <Link href="/users/sign_in" className={classes.linkTitle}>
+        <Button color="inherit">Login</Button>
+      </Link>
+    )
+  }
+}
 
 const NavigationBar = withRouter(({ history }) => {
   const classes = useStyles();
 
   function onAddButtonClick () {
+    history.push('/trees/step-one')
+  }
+
+  function navigateToLogin () {
     history.push('/trees/step-one')
   }
 
@@ -47,15 +73,7 @@ const NavigationBar = withRouter(({ history }) => {
               Plymouth Tree Partnership
             </Link>
           </Typography>
-          <Fab
-            size="small"
-            color="primary"
-            aria-label="add"
-            className={classes.fab}
-            onClick={onAddButtonClick}
-          >
-            <AddIcon />
-          </Fab>
+          <RightActionButton onAddButtonClick={onAddButtonClick} />
         </Toolbar>
       </AppBar>
     </div>
