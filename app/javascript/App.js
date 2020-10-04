@@ -5,7 +5,10 @@ import StepOnePage from './pages/StepOnePage'
 import StepTwoPage from './pages/StepTwoPage'
 import StepThreePage from './pages/StepThreePage'
 
-function App () {
+function App ({ current_user, feature_flags = [] }) {
+  window.CURRENT_USER = current_user
+  window.FEATURE_FLAGS = feature_flags
+
   return (
     <Router>
       <div className="container">

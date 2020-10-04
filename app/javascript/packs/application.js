@@ -9,19 +9,18 @@
 // Run this example by adding <%= javascript_pack_tag 'hello_react' %> to the head of your layout file,
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-
+import WebpackerReact from 'webpacker-react'
 import App from 'App'
+import LoginPage from '../pages/LoginPage'
+import RegistrationPage from '../pages/RegistrationPage'
 
 window.formData = {
   images: {},
   coordinates: {}
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <App />,
-    document.body.appendChild(document.createElement('div')),
-  )
+WebpackerReact.setup({
+  App,
+  LoginPage,
+  RegistrationPage
 })

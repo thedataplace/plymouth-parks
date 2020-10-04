@@ -1,12 +1,19 @@
 import React, { Component, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
+
+import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
-import ParkMap from '../components/ParkMap'
+import Link from '@material-ui/core/Link'
+import Typography from '@material-ui/core/Typography'
+
+import Copyright from '../components/Copyright'
 import NavigationBar from '../components/NavigationBar'
+import ParkMap from '../components/ParkMap'
+
+import { isFeatureEnabled, isLoggedIn } from '../utils/auth'
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -19,15 +26,19 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function Copyright() {
+function AddTreeButton () {
+  if (!isFeatureEnabled('tree-data-capture') || !isLoggedIn()) return ''
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      Crafted by { ' ' }
-      <Link color="inherit" href="https://thedata.place">The Data Place</Link>
-      {' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <Link component={RouterLink} to="/trees/step-one" variant="body2">
+      <Button
+        color="default"
+        fullWidth
+        size="medium"
+        variant="contained"
+      >
+        add a tree
+      </Button>
+    </Link>
   )
 }
 
@@ -43,9 +54,12 @@ function HomePage ({ showAddButton = true }) {
       <main>
         <NavigationBar showAddButton={showAddButton} />
         <Container maxWidth="md">
+          <br/>
+          <AddTreeButton />
           <ParkMap />
         </Container>
       </main>
+
       <footer className={classes.footer}>
         <Copyright />
       </footer>

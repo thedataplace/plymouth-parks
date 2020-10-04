@@ -11,6 +11,8 @@ services:
       - ./tmp/db:/var/lib/postgresql/data
 
   app_server:
+    tty: true
+    stdin_open: true
     build: .
     env_file: .env.dev
     volumes:

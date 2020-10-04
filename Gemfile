@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 6.0', '>= 6.0.3.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use postgis adapter for  working with PostGIS extension
@@ -19,6 +19,11 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 # Use devise for authentication
 gem 'devise'
+
+gem 'devise-jwt'
+
+gem 'rack-cors'
+
 # Use ActiveAdmin for adminstration panel
 gem 'activeadmin'
 # Use CoffeeScript for .coffee assets and views
@@ -51,6 +56,8 @@ gem 'jsonapi-rails'
 gem 'whenever', require: false
 
 gem 'webpacker', '~> 4.0', '>= 4.0.7'
+
+gem 'webpacker-react', '~> 0.3.2'
 
 group :development, :test do
   gem 'pry-rails'
