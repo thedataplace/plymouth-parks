@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 1
     docker:
-      - image: starefossen/ruby-node:2-10
+      - image: cimg/2.5.1-stretch-node-browsers
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
