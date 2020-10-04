@@ -1,3 +1,4 @@
+# User model
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::Allowlist
   # Include default devise modules. Others available are:

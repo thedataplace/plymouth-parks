@@ -1,5 +1,6 @@
 module API
   module V1
+    # Tokens controller
     class TokensController < Devise::SessionsController
       include ::ActionController::Cookies
       # protect_from_forgery with: :null_session
@@ -26,29 +27,23 @@ module API
       # @param auth_options [Hash] strong params for resource
       # @example POST /portal_data/sessions/create
       # @return renders jsonapi response
+
+      # rubocop:disable Metrics/AbcSize
       def create
         self.resource = warden.authenticate!(auth_options)
         sign_in(resource_name, resource)
         yield resource if block_given?
-
-        cookies.signed[:jwt] = {
-          value: resource.token,
-          httponly: true
-        }
-
+        cookies.signed[:jwt] = { value: resource.token, httponly: true }
         resource.token = nil
-
         render jsonapi: resource
       end
+      # rubocop:enable Metrics/AbcSize
 
       def destroy
         # sign_out(resource_name, resource)
         # yield resource if block_given?
-
         cookies.signed[:jwt] = nil
-        # resource.token = nil
-
-        # render jsonapi: resource
+        resource.token = nil
         head :no_content
       end
 

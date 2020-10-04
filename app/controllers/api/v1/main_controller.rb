@@ -1,5 +1,6 @@
 module API
   module V1
+    # Main controlelr for api
     class MainController < ApplicationController
       include ::ActionController::Cookies
       skip_before_action :verify_authenticity_token

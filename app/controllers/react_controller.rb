@@ -2,7 +2,7 @@
 class ReactController < ApplicationController
   include ActionView::Helpers::UrlHelper
 
-  before_action :authenticate_user!, unless: -> { is_root_path? }
+  before_action :authenticate_user!, unless: -> { root_path? }
 
   def index
     @feature_flags = FeatureFlag.all
@@ -10,7 +10,7 @@ class ReactController < ApplicationController
 
   private
 
-  def is_root_path?
+  def root_path?
     current_page?(root_url)
   end
 end

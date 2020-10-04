@@ -9,6 +9,9 @@ AllCops:
     - tmp/**/*
     - node_modules/**/*
     - storage/**/*
+    - config/**/*
+    - app/admin/**/*
+    - test/**/*
 Metrics/LineLength:
   Max: 160
 Style/BlockComments:
