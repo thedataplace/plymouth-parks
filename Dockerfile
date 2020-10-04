@@ -1,5 +1,5 @@
 # Base Docker image for Ruby
-FROM starefossen/ruby-node:2-10
+FROM timbru31/ruby-node:2.7
 # Update system
 RUN apt-get update -qq
 # Install system dependencies
