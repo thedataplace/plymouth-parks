@@ -3,12 +3,12 @@ module API
     # Tokens controller
     class TokensController < Devise::SessionsController
       include ::ActionController::Cookies
-      # protect_from_forgery with: :null_session
+      protect_from_forgery with: :null_session
       # skip CSRF check for APIs
-      # skip device auth check
       skip_before_action :verify_authenticity_token
+      # skip device auth check
       prepend_before_action :require_no_authentication, only: [:create]
-      prepend_before_action :rewrite_auth_headers, only: [:destroy]
+
       before_action :rewrite_param_names, only: [:create]
 
       # The default method to call if Devise fails to authenticate user
@@ -33,25 +33,11 @@ module API
         self.resource = warden.authenticate!(auth_options)
         sign_in(resource_name, resource)
         yield resource if block_given?
-        cookies.signed[:jwt] = { value: resource.token, httponly: true }
-        resource.token = nil
         render jsonapi: resource
       end
       # rubocop:enable Metrics/AbcSize
 
-      def destroy
-        # sign_out(resource_name, resource)
-        # yield resource if block_given?
-        cookies.signed[:jwt] = nil
-        resource.token = nil
-        head :no_content
-      end
-
       private
-
-      def rewrite_auth_headers
-        warden.env['HTTP_AUTHORIZATION'] = "Bearer #{cookies.signed[:jwt]}"
-      end
 
       # Warden uses request.params values when doing authentication,
       # so we need rewrite params from json to correct format for warden.
@@ -71,7 +57,6 @@ module API
       # @api private
       # @example respond_to_on_destroy
       def respond_to_on_destroy
-        cookies.delete(:jwt)
         head :no_content
       end
     end

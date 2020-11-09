@@ -10,9 +10,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :data_entries
       devise_scope :user do
-        delete '/tokens', to: 'tokens#destroy'
         post '/tokens', to: 'tokens#create'
         post '/register', to: 'registrations#create'
+        delete '/tokens', to: 'tokens#destroy'
       end
     end
   end

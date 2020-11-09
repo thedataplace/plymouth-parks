@@ -7,7 +7,6 @@ module API
       before_action :authenticate_api_user!
 
       def authenticate_api_user!
-        warden.env['HTTP_AUTHORIZATION'] = "Bearer #{cookies.signed[:jwt]}"
         result = catch(:warden) { warden.authenticate!(scope: :user) }
         head :unauthorized if result.is_a?(Hash)
       end
