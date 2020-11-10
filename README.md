@@ -18,17 +18,17 @@ This repository stores the source code for the Plymouth Parks Data Capture web a
 
 Build the development application server image
 ```shell
-./scripts/dev build app_server
+./script/dev build app_server
 ```
 
 Set up the development database
 ```shell
-./scripts/dev run --rm app_server rails db:create db:gis:setup db:migrate db:seed
+./script/dev run --rm app_server rails db:create db:gis:setup db:migrate db:seed
 ```
 
 Start the development application server container
 ```shell
-./scripts/dev up app_server
+./script/dev up app_server
 ```
 
 Open the application running locally in your browser at [http://localhost:3000](http://localhost:3000).
@@ -98,27 +98,27 @@ docker-compose -f docker-compose.prod.yml up -d certbot
 
 Build the production application server image
 ```shell
-./scripts/prod build app_server
+./script/prod build app_server
 ```
 
 Start up the production database
 ```shell
-./scripts/prod run up -d database
+./script/prod run up -d database
 ```
 
 Initialize the production database
 ```shell
-./scripts/prod run --rm app_server rails db:create db:gis:setup db:migrate
+./script/prod run --rm app_server rails db:create db:gis:setup db:migrate
 ```
 
 Start up the production application server container
 ```shell
-./scripts/prod up -d app_server
+./script/prod up -d app_server
 ```
 
 Restart the production web server (already started from SSL setup script)
 ```shell
-./scripts/prod restart web_server
+./script/prod restart web_server
 ```
 
 #### Administrator Setup
@@ -127,7 +127,7 @@ To create an administrator user:
 
 Connect to the production console (REPL)
 ```shell
-./scripts/prod exec app_server rails console
+./script/prod exec app_server rails console
 ```
 
 You will see the following output
