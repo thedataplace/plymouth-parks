@@ -16,6 +16,15 @@ Rails.application.routes.draw do
         delete '/tokens', to: 'tokens#destroy'
       end
     end
+
+    namespace :v2 do
+      resources :data_entries
+      resources :users, only: [:index]
+      devise_scope :user do
+        post '/tokens', to: 'tokens#create'
+        delete '/tokens', to: 'tokens#destroy'
+      end
+    end
   end
 
   get '/step-one', to: 'react#index'
