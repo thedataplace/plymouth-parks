@@ -189,3 +189,9 @@ start stopped containers:
 sudo docker start <containerid>
 ```
 More details available here: https://phoenixnap.com/kb/how-to-list-start-stop-docker-containers
+
+curl -v \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjA0OTI2MTE1LCJleHAiOjE2MDU1MzA5MTUsImp0aSI6ImE5MjI3YmY1LWU1YmEtNDdiYi1hMmQ4LWM5MTU3YTQzNDhlMSJ9.TiddehnBHoBDJr-DinqkFN3_tqcIktI5nkamN4TuSYA' \
+  'http://localhost:3000/users'
