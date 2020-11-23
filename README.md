@@ -31,6 +31,11 @@ Start the development application server container
 ./script/dev up app_server
 ```
 
+Connect to the dev console
+```shell
+./script/dev run --rm app_server rails console
+```
+
 Open the application running locally in your browser at [http://localhost:3000](http://localhost:3000).
 
 ### Design
