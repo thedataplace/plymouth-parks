@@ -27,15 +27,12 @@ module API
       # @param auth_options [Hash] strong params for resource
       # @example POST /portal_data/sessions/create
       # @return renders jsonapi response
-
-      # rubocop:disable Metrics/AbcSize
       def create
         self.resource = warden.authenticate!(auth_options)
         sign_in(resource_name, resource)
         yield resource if block_given?
         render jsonapi: resource
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 

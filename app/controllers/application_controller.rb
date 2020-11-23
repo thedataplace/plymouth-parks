@@ -4,10 +4,10 @@ class ApplicationController < ActionController::Base
   before_action :cors_set_access_control_headers
 
   def cors_preflight_check
-    if request.method == 'OPTIONS'
-      cors_set_access_control_headers
-      render text: '', content_type: 'text/plain'
-    end
+    return unless request.method == 'OPTIONS'
+
+    cors_set_access_control_headers
+    render text: '', content_type: 'text/plain'
   end
 
   protected
