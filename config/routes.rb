@@ -41,5 +41,7 @@ Rails.application.routes.draw do
 
   root 'react#index'
 
+  match '*all', controller: 'application', action: 'cors_preflight_check', via: [:options]
+
   # match '*path', to: 'react#index', via: :all
 end
