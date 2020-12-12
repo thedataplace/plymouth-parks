@@ -172,6 +172,15 @@ With this main administrator account you can add additional users from the admin
 
 To access the admin panel go to [http://insert-your-domain.com/admin]()
 
+### GIS server 
+
+The GIS server (gis.thedata.place) runs an Apache web server with a proxypass to a Node ... thing, located in /opt/dirt.  
+This is started using 
+```cd /opt/dirt
+sudo pm2 start index.js
+```
+
+
 ### Troubleshooting
 
 The site runs on 4 separate Docker images on the Digital Ocean server:  
