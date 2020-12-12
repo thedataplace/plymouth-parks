@@ -176,7 +176,8 @@ To access the admin panel go to [http://insert-your-domain.com/admin]()
 
 The GIS server (gis.thedata.place) runs an Apache web server with a proxypass to a Node ... thing, located in /opt/dirt.  
 This is started using 
-```cd /opt/dirt
+```
+cd /opt/dirt
 sudo pm2 start index.js
 ```
 
