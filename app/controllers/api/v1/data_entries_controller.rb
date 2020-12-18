@@ -12,44 +12,25 @@ module API
         render jsonapi: @data_entries
       end
 
-      # GET /notes/1
-      # def show
-      #   render jsonapi: @note
-      # end
-
       # POST /notes
       def create
         @data_entry = DataEntry.new(data_entry_params)
 
-        if @data_entry.save
+        begin
+          # NOTE: This is a hack to get around an issue with S3 images saving
+          # and timing issues with the after_save callback.
+          @data_entry.save!
+          @data_entry.save_image_storage_url!
+
           render jsonapi: @data_entry, status: :created
-        else
+        rescue
           render jsonapi_errors: @data_entry.errors, status: :unprocessable_entity
         end
       end
 
-      # PATCH/PUT /notes/1
-      # def update
-      #   if @note.update(note_params)
-      #     render jsonapi: @note
-      #   else
-      #     render jsonapi_errors: @note.errors, status: :unprocessable_entity
-      #   end
-      # end
-
-      # DELETE /notes/1
-      # def destroy
-      #   @note.destroy
-      # end
-
       private
 
-      # Use callbacks to share common setup or constraints between actions.
-      # def set_note
-      #   @note = Note.find(params[:id])
-      # end
-      #
-      # # Only allow a trusted parameter "white list" through.
+      # Only allow a trusted parameter "white list" through.
       def data_entry_params
         params.require(:data_entry).permit(
           :image,

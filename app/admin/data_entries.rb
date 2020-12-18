@@ -21,9 +21,9 @@ ActiveAdmin.register DataEntry do
     column :username do |entry|
       entry.username
     end
-    column :primary_image do |entry|
-      image_tag(entry.image_url) if entry.image.attached?
-    end
+    # column :primary_image do |entry|
+    #   image_tag(entry.image_storage_url) if entry.image.attached?
+    # end
     actions
   end
   show do

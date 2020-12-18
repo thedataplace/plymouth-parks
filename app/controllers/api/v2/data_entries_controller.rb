@@ -19,9 +19,14 @@ module API
         @data_entry.image.attach(data: data_entry_params[:image])
         @data_entry.secondary_image.attach(data: data_entry_params[:secondary_image])
 
-        if @data_entry.save
+        begin
+          # NOTE: This is a hack to get around an issue with S3 images saving
+          # and timing issues with the after_save callback.
+          @data_entry.save!
+          @data_entry.save_image_storage_url!
+
           render jsonapi: @data_entry, status: :created
-        else
+        rescue
           render jsonapi_errors: @data_entry.errors, status: :unprocessable_entity
         end
       end

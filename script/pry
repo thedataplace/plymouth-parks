@@ -1,0 +1,1 @@
+docker attach $(docker ps --no-trunc -aqf name=plymouth-parks_app_server)
