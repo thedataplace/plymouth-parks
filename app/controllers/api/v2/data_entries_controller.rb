@@ -28,18 +28,16 @@ module API
       def set_data_entry
         @data_entry = DataEntry.new(data_entry_params)
 
-        if data_entry_params[:image]
-          @data_entry.image.attach(data: data_entry_params[:image])
-        end
+        primary_image = data_entry_params[:image]
+        secondary_image = data_entry_params[:secondary_image]
 
-        if data_entry_params[:secondary_image]
-          @data_entry.secondary_image.attach(data: data_entry_params[:secondary_image])
-        end
+        @data_entry.image.attach(data: primary_image) if primary_image
+        @data_entry.secondary_image.attach(data: secondary_image) if secondary_image
       end
 
       private
 
-      # Only allow a trusted parameter "white list" through.
+      # Only allow a trusted parameter "allow list" through.
       def data_entry_params
         params.require(:data_entry).permit(
           :image,
