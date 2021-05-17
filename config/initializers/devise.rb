@@ -308,7 +308,7 @@ Devise.setup do |config|
 
     jwt.revocation_requests = [
       ['DELETE', %r{^/api/v1/tokens$}],
-      ['POST', %r{^/api/v2/tokens$}]
+      ['DELETE', %r{^/api/v2/tokens$}],
     ]
   end
 end

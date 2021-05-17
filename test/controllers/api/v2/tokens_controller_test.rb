@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TokensControllerTest < ActionDispatch::IntegrationTest
+class API::V2::TokensControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:johnsmith)
     @params = { email: @user.email, password: 'password12345' }
@@ -36,7 +36,9 @@ class TokensControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
     assert_nil @response.headers['Authorization']
     response_data = JSON.parse(@response.body)
-    assert_equal 'Authentication required', response_data['response']
+
+    assert_equal 'Unauthorized', response_data['errors'][0]['title']
+    assert_equal 'Invalid email or password.', response_data['errors'][0]['detail']
   end
 
   test 'POST /sessions/destroy removes jwt and returns no content ' do
