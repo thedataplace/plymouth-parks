@@ -12,14 +12,6 @@ class DataEntriesController < ApplicationController
   def create
     @data_entry = DataEntry.new(data_entry_params)
 
-    binding.pry
-
-    # @data_entry.save
-    #
-    #
-    #
-    # @data_entry.save_image_storage_url!
-
     respond_to do |format|
       if @data_entry.valid?
         format.html { redirect_to root_path, notice: 'Data entry was successfully created.' }
