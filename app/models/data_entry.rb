@@ -18,11 +18,11 @@ class DataEntry < ApplicationRecord
     with_image_urls_near_expiry.each(&:save_image_storage_url!)
   end
 
+  # NOTE: local file path rails_blob_path(image)
   def image_url
     return unless image.attached?
-    image.variant(auto_orient: true).processed.service_url
 
-    # NOTE: local file path rails_blob_path(image)
+    image.variant(auto_orient: true).processed.service_url
   end
 
   def secondary_image_url

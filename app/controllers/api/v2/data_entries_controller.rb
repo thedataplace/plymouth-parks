@@ -2,9 +2,6 @@ module API
   module V2
     # API controller for data entries
     class DataEntriesController < MainController
-      # deserializable_resource :note, only: [:create, :update]
-      # before_action :set_note, only: [:show, :update, :destroy]
-
       # GET /data_entries
       def index
         @data_entries = DataEntry.all
@@ -14,20 +11,29 @@ module API
 
       # POST /data_entries
       def create
-        @data_entry = DataEntry.new(data_entry_params)
+        set_data_entry
 
-        @data_entry.image.attach(data: data_entry_params[:image])
-        @data_entry.secondary_image.attach(data: data_entry_params[:secondary_image])
-
+        # rubocop:disable Style/RescueStandardError
         begin
-          # NOTE: This is a hack to get around an issue with S3 images saving
-          # and timing issues with the after_save callback.
+          # NOTE: This is a hack to get around an issue with S3 images saving and timing issues with the after_save.
           @data_entry.save!
           @data_entry.save_image_storage_url!
-
           render jsonapi: @data_entry, status: :created
         rescue
           render jsonapi_errors: @data_entry.errors, status: :unprocessable_entity
+        end
+        # rubocop:enable Style/RescueStandardError
+      end
+
+      def set_data_entry
+        @data_entry = DataEntry.new(data_entry_params)
+
+        if data_entry_params[:image]
+          @data_entry.image.attach(data: data_entry_params[:image])
+        end
+
+        if data_entry_params[:secondary_image]
+          @data_entry.secondary_image.attach(data: data_entry_params[:secondary_image])
         end
       end
 
