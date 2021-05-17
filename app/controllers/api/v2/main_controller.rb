@@ -1,5 +1,5 @@
 module API
-  module V1
+  module V2
     # Main controlelr for api
     class MainController < ApplicationController
       include ::ActionController::Cookies

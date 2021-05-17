@@ -9,10 +9,20 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :data_entries
+      resources :users, only: [:index]
       devise_scope :user do
-        delete '/tokens', to: 'tokens#destroy'
         post '/tokens', to: 'tokens#create'
         post '/register', to: 'registrations#create'
+        delete '/tokens', to: 'tokens#destroy'
+      end
+    end
+
+    namespace :v2 do
+      resources :data_entries
+      resources :users, only: [:index]
+      devise_scope :user do
+        post '/tokens', to: 'tokens#create'
+        delete '/tokens', to: 'tokens#destroy'
       end
     end
   end
@@ -30,6 +40,8 @@ Rails.application.routes.draw do
   # get '/register', to: 'react#index'
 
   root 'react#index'
+
+  match '*all', controller: 'application', action: 'cors_preflight_check', via: [:options]
 
   # match '*path', to: 'react#index', via: :all
 end

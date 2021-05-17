@@ -9,7 +9,7 @@ module ActiveSupport
 
     # Add more helper methods to be used by all tests here...
     def parsed_response
-      JSON.parse(@response.body)
+      JSON.decode(@response.body)
     end
 
     def assert_response_jsonapi
@@ -25,7 +25,7 @@ module ActiveSupport
     end
 
     def api_sign_in(user)
-      post api_v1_tokens_url, params: {
+      post api_v2_tokens_url, params: {
         email: user.email,
         password: 'password12345'
       }

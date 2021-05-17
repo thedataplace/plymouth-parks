@@ -1,5 +1,5 @@
 module API
-  module V1
+  module V2
     # Tokens controller
     class TokensController < Devise::SessionsController
       include ::ActionController::Cookies

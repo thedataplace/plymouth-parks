@@ -18,49 +18,29 @@ This repository stores the source code for the Plymouth Parks Data Capture web a
 
 Build the development application server image
 ```shell
-docker-compose -f docker-compose.dev.yml build app_server
+./script/dev build app_server
 ```
 
 Set up the development database
 ```shell
-docker-compose -f docker-compose.dev.yml run --rm app_server rails db:create \
-                                                                   db:gis:setup \
-                                                                   db:migrate \
-                                                                   db:seed
+./script/dev run --rm app_server rails db:create db:gis:setup db:migrate db:seed
 ```
 
 Start the development application server container
 ```shell
-docker-compose -f docker-compose.dev.yml up app_server
+./script/dev up app_server
+```
+
+Connect to the dev console
+```shell
+./script/dev run --rm app_server rails console
 ```
 
 Open the application running locally in your browser at [http://localhost:3000](http://localhost:3000).
 
 ### Design
 
-The default CSS for the web form is located in `app/assets/stylesheets/web_form.css`. Additional CSS or SCSS files added to the `app/assets/stylesheets` directory will be picked up by automatically by the application's asset pipeline.
-
-Static images can be added to the `app/assets/images` directory. To refer to an image in a stylesheet use the `url` helper as in the following example (given an image `app/assets/images/gradient-background.png`).
-
-```CSS
-.container {
-  background-image: url(gradient-background.png);
-}
-```
-
-To render an image directly in HTML / erb. For example in `app/views/data_entries/_form.html.erb` (the main entry point for the app right now), you can use an `erb` tag and Ruby helper method as follows.
-
-```
-<%= image_tag('plymouth-city-council.png', id: 'header-logo', alt: 'Logo') %>
-```
-
-Which will output the HTML
-
-```HTML
-<img class="logo" alt="Logo" src="/assets/plymouth-city-council-[ASSET_HASH_STAMP].png">
-```
-
-Note: `ASSET_HASH_STAMP` is an identifier auto-generated when the app is spun up
+The main entry point for client assets are app/javascript and app/assets.
 
 ### Production Environment
 
@@ -123,29 +103,27 @@ docker-compose -f docker-compose.prod.yml up -d certbot
 
 Build the production application server image
 ```shell
-docker-compose -f docker-compose.prod.yml build app_server
+./script/prod build app_server
 ```
 
 Start up the production database
 ```shell
-docker-compose -f docker-compose.prod.yml up -d database
+./script/prod run up -d database
 ```
 
 Initialize the production database
 ```shell
-docker-compose -f docker-compose.prod.yml run --rm app_server rails db:create \
-                                                                    db:gis:setup \
-                                                                    db:migrate
+./script/prod run --rm app_server rails db:create db:gis:setup db:migrate
 ```
 
 Start up the production application server container
 ```shell
-docker-compose -f docker-compose.prod.yml up -d app_server
+./script/prod up -d app_server
 ```
 
 Restart the production web server (already started from SSL setup script)
 ```shell
-docker-compose -f docker-compose.prod.yml restart web_server
+./script/prod restart web_server
 ```
 
 #### Administrator Setup
@@ -154,7 +132,7 @@ To create an administrator user:
 
 Connect to the production console (REPL)
 ```shell
-docker-compose -f docker-compose.prod.yml exec app_server rails console
+./script/prod exec app_server rails console
 ```
 
 You will see the following output
