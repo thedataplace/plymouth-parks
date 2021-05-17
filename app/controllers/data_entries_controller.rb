@@ -13,7 +13,7 @@ class DataEntriesController < ApplicationController
     @data_entry = DataEntry.new(data_entry_params)
 
     respond_to do |format|
-      if @data_entry.valid?
+      if @data_entry.save
         format.html { redirect_to root_path, notice: 'Data entry was successfully created.' }
         format.json { render :show, status: :created, location: @data_entry }
       else

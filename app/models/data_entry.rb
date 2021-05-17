@@ -6,8 +6,6 @@ class DataEntry < ApplicationRecord
   has_one_base64_attached :image
   has_one_base64_attached :secondary_image
 
-  # after_save :save_image_storage_url!
-
   scope :with_image_urls_near_expiry, lambda {
     where('image_storage_url_expiry_date <= ?', expiry_date)
   }
